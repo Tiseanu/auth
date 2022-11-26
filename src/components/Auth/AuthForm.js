@@ -1,12 +1,14 @@
 import { useState, useRef, useContext } from 'react';
-import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 
+import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [messageRegister, setMessageRegister] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
   const emailInput = useRef();
   const passInput = useRef();
@@ -46,6 +48,7 @@ const AuthForm = () => {
               console.log(1, data);
               authCtx.login(data.idToken);
               setMessageRegister('You are now loggedin!');
+              history.replace('/profile');
             });
           } else { // errors
             return resp.json().then(data => {

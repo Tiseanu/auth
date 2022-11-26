@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
 import classes from './MainNavigation.module.css';
@@ -7,6 +7,12 @@ import classes from './MainNavigation.module.css';
 const MainNavigation = () => {
   const authCtx = useContext(AuthContext);// get acces to the context and it's properties
   const isLoggedIn = authCtx.isLoggedin;
+  const history = useHistory();
+  
+  const logoutUser = () => {
+    authCtx.logout();
+    history.replace('/auth');
+  }
 
   return (
     <header className={classes.header}>
@@ -20,7 +26,7 @@ const MainNavigation = () => {
  
           {isLoggedIn && (
             <li>
-              <button>Logout</button>
+              <button onClick={logoutUser}>Logout</button>
             </li>
           )}
 
