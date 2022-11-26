@@ -46,7 +46,8 @@ const AuthForm = () => {
           if (resp.ok) {
             return resp.json().then(data => {
               console.log(1, data);
-              authCtx.login(data.idToken);
+              const expirationDate = new Date(new Date().getTime() + (+data.expiresIn * 1000)); // convert to  number and then in milliseconds - adding to the current milliseconds time
+              authCtx.login(data.idToken, expirationDate);
               setMessageRegister('You are now loggedin!');
               history.replace('/profile');
             });
