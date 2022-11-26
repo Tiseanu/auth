@@ -8,14 +8,16 @@ const AuthContext = React.createContext({ // the blueprint
 });
 
 export const AuthContextProvider = (props) => { // my component
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const userIsLoggedIn = !!token;
 
     const loginHandler = (token) => {
         setToken(token);
+        localStorage.setItem('token', token);
     };
     const logoutHandler = () => {
         setToken(null);
+        localStorage.removeItem('token');
     };
 
     const contextValue = {
